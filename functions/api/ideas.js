@@ -23,8 +23,7 @@ Return a JSON array of 5 objects: {"title": punchy 3-8 word headline, "body": 35
   for (const model of MODELS) {
     try {
       const out = await env.AI.run(model, { messages, max_tokens: 1200, temperature: 0.8 });
-      const text = typeof out === 'string' ? out : (out.response ?? out.result?.response ?? '');
-      const cards = extract(text);
+      const cards = extract(out);
       if (cards.length) return json({ cards, model });
       lastErr = `unparseable output from ${model}`;
     } catch (e) { lastErr = `${model}: ${e.message}`; }
@@ -32,10 +31,25 @@ Return a JSON array of 5 objects: {"title": punchy 3-8 word headline, "body": 35
   return json({ error: lastErr }, 502);
 }
 
-function extract(text) {
+const valid = a => (Array.isArray(a) ? a.filter(c => c && c.title && c.body) : []);
+
+// Workers AI returns an object carrying both a pre-parsed `response` (an array
+// when the model emitted valid JSON) and an OpenAI-style `choices[].message
+// .content` string. Older models / string mode return a bare string. Handle all.
+function extract(out) {
+  if (Array.isArray(out)) return valid(out);
+  if (Array.isArray(out?.response)) return valid(out.response);
+
+  const text =
+    typeof out === 'string' ? out :
+    typeof out?.response === 'string' ? out.response :
+    out?.choices?.[0]?.message?.content ??
+    out?.result?.response ?? '';
+  if (typeof text !== 'string') return [];
+
   const clean = text.replace(/<think>[\s\S]*?<\/think>/g, '').replace(/```json|```/g, '');
   const s = clean.indexOf('['), e = clean.lastIndexOf(']');
   if (s < 0 || e < 0) return [];
-  try { const a = JSON.parse(clean.slice(s, e + 1)); return Array.isArray(a) ? a.filter(c => c && c.title && c.body) : []; } catch { return []; }
+  try { return valid(JSON.parse(clean.slice(s, e + 1))); } catch { return []; }
 }
 const json = (o, s = 200) => new Response(JSON.stringify(o), { status: s, headers: { 'content-type': 'application/json' } });
