@@ -4,20 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="An Idea">
-<meta name="theme-color" content="#FFFFFF">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="icon" href="/icons/icon-192.png">
 <title>An Idea ☝️💡</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fff;--ink:#262626;--muted:#8E8E8E;--line:#EFEFEF;--soft:#FAFAFA;--bolt:#FF8A3D;--bolt2:#FFE45C;--red:#ED4956}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--bg:#fff;--ink:#262626;--muted:#8E8E8E;--line:#EFEFEF;--soft:#FAFAFA;--bolt:#FF8A3D;--bolt2:#FFE45C;--red:#ED4956;--capink:#262626}
+@media(prefers-color-scheme:dark){:root{--bg:#000;--ink:#F5F5F5;--muted:#A8A8A8;--line:#262626;--soft:#121212;--capink:#E6E6E6}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
 #app{max-width:480px;margin:0 auto;min-height:100vh;padding-top:env(safe-area-inset-top)}
-.top{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:12px 16px 10px}
+.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:12px 16px 10px}
 .top h1{margin:0;font:600 24px Fraunces,serif;letter-spacing:-.02em;display:flex;align-items:center;gap:6px}
 .top h1 svg{width:22px;height:22px}
 .pill{font:600 12px Inter;padding:6px 10px;border-radius:999px;background:linear-gradient(135deg,var(--bolt2),var(--bolt));color:#3A2000}
@@ -28,7 +29,7 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-appl
 .story{flex:0 0 auto;width:66px;text-align:center;border:0;background:0;padding:0;cursor:pointer;font-family:inherit}
 .story .ring{width:62px;height:62px;border-radius:50%;padding:3px;background:linear-gradient(45deg,#FFE45C,#FF8A3D,#E1306C,#6A2BD9);margin:0 auto}
 .story .ring.seen{background:var(--line)}
-.story .av{width:100%;height:100%;border-radius:50%;background:var(--bg);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:24px}
+.story .av{width:100%;height:100%;border-radius:50%;background:var(--bg);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:24px}
 .story span{display:block;font-size:11px;margin-top:5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .story.new .av{font-size:26px;color:var(--muted)}
 /* feed post */
@@ -37,8 +38,20 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-appl
 .ph .av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#1C1B33,#3A2B6B);display:flex;align-items:center;justify-content:center;font-size:16px}
 .ph b{font-size:14px;font-weight:600}.ph small{display:block;font-size:12px;color:var(--muted)}
 .body{margin:0 14px;aspect-ratio:1/1;border-radius:6px;padding:26px 24px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;color:#fff;cursor:pointer;user-select:none}
-.body h2{font:600 26px/1.2 Fraunces,serif;margin:0 0 14px;letter-spacing:-.01em}
-.body p{font:400 16px/1.5 Inter;margin:0;opacity:.94}
+.body h2{font:600 30px/1.15 Fraunces,serif;margin:0 0 16px;letter-spacing:-.015em}
+.body p{font:500 17px/1.45 Inter;margin:0;opacity:.94}
+.body .src{position:absolute;left:24px;top:22px;font:600 11px Inter;letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+.cap .txt{color:var(--capink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cap.open .txt{display:block}
+.cap .mo{color:var(--muted);background:0;border:0;padding:0;font:14px Inter;cursor:pointer}
+.cap.open .mo{display:none}
+.cap .try{margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--soft);border:1px solid var(--line);font-size:14px;line-height:1.4}
+.cap .try b{color:var(--bolt)}
+.sk{border-bottom:1px solid var(--line);padding-bottom:14px}
+.sk .ph .av,.sk .l{background:linear-gradient(90deg,var(--line) 25%,var(--soft) 50%,var(--line) 75%);background-size:200% 100%;animation:sh 1.3s infinite}
+.sk .l{height:12px;border-radius:6px;margin:8px 14px}
+.sk .tile{margin:0 14px;aspect-ratio:1/1;border-radius:6px;background:linear-gradient(90deg,var(--line) 25%,var(--soft) 50%,var(--line) 75%);background-size:200% 100%;animation:sh 1.3s infinite}
+@keyframes sh{to{background-position:-200% 0}}
 .body .heart{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transform:scale(.6)}
 .body .heart.pop{animation:pop .7s ease-out}
 @keyframes pop{15%{opacity:1;transform:scale(1.15)}60%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
@@ -49,15 +62,14 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-appl
 .acts .saved svg{fill:var(--ink)}
 .acts .sp{flex:1}
 .cap{padding:0 14px;font-size:14px;line-height:1.45}.cap b{font-weight:600}
-.cap .note{color:var(--ink)}
-.cap .meta{color:var(--muted);font-size:12px;margin-top:6px}
+.cap .meta{color:var(--muted);font-size:12px;margin-top:8px}
 .loading,.empty{text-align:center;color:var(--muted);padding:56px 24px;font-size:14px;line-height:1.5}
 .empty b{display:block;font:600 22px Fraunces,serif;color:var(--ink);margin-bottom:6px}
 .spin{width:26px;height:26px;border:3px solid var(--line);border-top-color:var(--ink);border-radius:50%;margin:0 auto 14px;animation:s .8s linear infinite}
 @keyframes s{to{transform:rotate(360deg)}}
-.more{display:block;margin:16px auto 24px;font:600 14px Inter;padding:12px 20px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.more{display:block;margin:16px auto 24px;font:600 14px Inter;padding:12px 20px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
 /* search */
-.sbox{padding:12px 16px;position:sticky;top:0;background:#fff;z-index:4}
+.sbox{padding:12px 16px;position:sticky;top:0;background:var(--bg);z-index:4}
 .sbox input{width:100%;font:16px Inter;padding:12px 14px;border:0;border-radius:12px;background:var(--line);color:var(--ink);outline:0}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:4px 16px 20px}
 .tile{aspect-ratio:1;border-radius:12px;border:0;padding:16px;display:flex;align-items:flex-end;font:600 16px/1.2 Fraunces,serif;color:#fff;text-align:left;cursor:pointer;letter-spacing:-.01em}
@@ -65,7 +77,7 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-appl
 .h2{font:600 22px Fraunces,serif;margin:18px 16px 4px}.sub{font-size:13px;color:var(--muted);margin:0 16px 12px}
 .item{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);align-items:flex-start}
 .item .sw{width:56px;height:56px;border-radius:8px;flex:0 0 auto}
-.item h3{margin:0 0 3px;font:600 15px/1.3 Fraunces,serif}.item p{margin:0;font-size:13px;line-height:1.45;color:#444}
+.item h3{margin:0 0 3px;font:600 15px/1.3 Fraunces,serif}.item p{margin:0;font-size:13px;line-height:1.45;color:var(--capink)}
 .item small{display:block;color:var(--muted);font-size:11px;margin-top:6px}
 .item button{background:0;border:0;color:var(--muted);font:12px Inter;cursor:pointer;padding:4px 0}
 .prof{text-align:center;padding:28px 16px 8px}
@@ -76,12 +88,12 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-appl
 .bar{height:6px;background:var(--line);border-radius:3px;margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--bolt2),var(--bolt));transition:width .3s}
 .danger{margin:20px 16px;font:500 13px Inter;color:var(--red);background:0;border:0;cursor:pointer}
 /* nav */
-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:6px 0 calc(6px + env(safe-area-inset-bottom));z-index:5}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg);border-top:1px solid var(--line);padding:6px 0 calc(6px + env(safe-area-inset-bottom));z-index:5}
 nav div{max-width:480px;margin:0 auto;display:flex}
 nav button{flex:1;background:0;border:0;padding:8px;cursor:pointer;color:var(--ink);display:flex;justify-content:center}
 nav svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 nav button.on svg{fill:currentColor}
-.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;padding:10px 16px;border-radius:999px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);font-size:13px;padding:10px 16px;border-radius:999px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
 .toast.on{opacity:1}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -161,22 +173,23 @@ function renderStories(){
 }
 async function openTopic(t){
   if(state.busy)return;state.busy=true;state.topic=t;state.seen[t]=1;persist('seen',state.seen);renderStories();show('home');
-  $('#feed').innerHTML=`<div class="loading"><div class="spin"></div>Writing fresh ideas on ${esc(t)}…</div>`;
+  $('#feed').innerHTML=SKEL+SKEL;
   try{state.feed=await fetchIdeas(t);renderFeed()}
   catch(e){$('#feed').innerHTML=`<div class="empty"><b>Couldn't load ideas</b>Check your connection and try again.<br><br><button class="more" onclick="openTopic(${JSON.stringify(t)})">Retry</button></div>`}
   state.busy=false;
 }
 function renderFeed(){
   if(!state.feed.length){$('#feed').innerHTML=`<div class="empty"><b>Your feed is empty</b>Tap a topic above to start reading.</div>`;return}
+  // (feed is auto-filled on first launch, see boot)
   $('#feed').innerHTML=state.feed.map(c=>post(c)).join('')+`<button class="more" id="moreBtn">Load more on ${esc(state.topic)}</button>`;
-  $('#moreBtn').onclick=async()=>{const b=$('#moreBtn');b.textContent='Writing…';b.disabled=true;try{const n=await fetchIdeas(state.topic);state.feed.push(...n);renderFeed();window.scrollBy({top:400,behavior:'smooth'})}catch{b.textContent='Failed, tap to retry';b.disabled=false}};
+  $('#moreBtn').onclick=async()=>{const b=$('#moreBtn');b.textContent='Writing more…';b.disabled=true;try{const n=await fetchIdeas(state.topic);state.feed.push(...n);renderFeed();window.scrollBy({top:400,behavior:'smooth'})}catch{b.textContent='Failed, tap to retry';b.disabled=false}};
   bindPosts();observeReads();
 }
 function post(c){
   const liked=!!state.liked[c.id],saved=state.saved.some(s=>s.id===c.id);
   return `<article class="post" data-id="${esc(c.id)}">
    <div class="ph"><div class="av">💡</div><div><b>${esc(c.topic)}</b><small>${esc(c.source||'')}</small></div></div>
-   <div class="body" style="background:linear-gradient(135deg,${c.grad})"><h2>${esc(c.title)}</h2><p>${esc(c.body)}</p>
+   <div class="body" style="background:linear-gradient(135deg,${c.grad})"><span class="src">An Idea</span><h2>${esc(c.title)}</h2><p>${esc(c.hook||'')}</p>
      <div class="heart"><svg width="96" height="96" viewBox="0 0 24 24" fill="#fff"><path d="M12 21s-7-4.6-9.3-9A5.3 5.3 0 0 1 12 6a5.3 5.3 0 0 1 9.3 6c-2.3 4.4-9.3 9-9.3 9z"/></svg></div></div>
    <div class="acts">
      <button class="like ${liked?'liked':''}" aria-label="Like"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.3-9A5.3 5.3 0 0 1 12 6a5.3 5.3 0 0 1 9.3 6c-2.3 4.4-9.3 9-9.3 9z"/></svg></button>
@@ -184,9 +197,11 @@ function post(c){
      <span class="sp"></span>
      <button class="save ${saved?'saved':''}" aria-label="Save"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
    </div>
-   <div class="cap"><b>Try this</b> <span class="note">${esc(c.note)}</span><div class="meta">Free open-source model · ${today()}</div></div>
+   <div class="cap"><div class="txt"><b>${esc(c.title)}</b> ${esc(c.body)}</div><button class="mo">more</button>
+     <div class="try"><b>Try this</b> ${esc(c.note)}</div><div class="meta">${esc(c.source||'')}</div></div>
   </article>`;
 }
+const SKEL='<div class="sk"><div class="ph"><div class="av"></div><div class="l" style="width:120px;margin:0"></div></div><div class="tile"></div><div class="l" style="width:80%"></div><div class="l" style="width:55%"></div></div>';
 function bindPosts(){
   document.querySelectorAll('.post').forEach(a=>{
     const id=a.dataset.id,c=state.feed.find(x=>x.id===id);
@@ -194,7 +209,8 @@ function bindPosts(){
     a.querySelector('.like').onclick=like;
     let last=0;a.querySelector('.body').onclick=()=>{const n=Date.now();if(n-last<300){if(!state.liked[id])like();const h=a.querySelector('.heart');h.classList.remove('pop');void h.offsetWidth;h.classList.add('pop')}last=n};
     a.querySelector('.save').onclick=()=>{toggleSave(c);a.querySelector('.save').classList.toggle('saved',state.saved.some(s=>s.id===id))};
-    a.querySelector('.share').onclick=async()=>{const t=`${c.title}\n\n${c.body}\n\n— via An Idea ☝️💡`;if(navigator.share){try{await navigator.share({title:c.title,text:t})}catch{}}else{await navigator.clipboard?.writeText(t);toast('Copied')}};
+    a.querySelector('.mo').onclick=()=>a.querySelector('.cap').classList.add('open');
+    a.querySelector('.share').onclick=async()=>{const t=`${c.title}\n${c.hook||''}\n\n${c.body}\n\nTry this: ${c.note}\n\n— An Idea ☝️💡 an-idea.pages.dev`;if(navigator.share){try{await navigator.share({title:c.title,text:t})}catch{}}else{await navigator.clipboard?.writeText(t);toast('Copied')}};
   });
 }
 function toggleSave(c){const i=state.saved.findIndex(s=>s.id===c.id);if(i>-1){state.saved.splice(i,1);toast('Removed')}else{state.saved.unshift({...c,at:today()});toast('Saved')}persist('saved',state.saved)}
@@ -218,7 +234,8 @@ $('#reset').onclick=()=>{if(confirm('Clear saved ideas, likes and streak on this
 
 (async()=>{
   state.saved=await load('saved',[]);state.liked=await load('liked',{});state.seen=await load('seen',{});state.stats=await load('stats',state.stats);
-  renderStories();renderProfile();renderFeed();
+  renderStories();renderProfile();
+  if(state.feed.length)renderFeed();else openTopic(TOPICS[(new Date().getDate()+new Date().getMonth())%TOPICS.length][0]);
   if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('/sw.js').catch(()=>{});
 })();
 </script>
