@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="An Idea">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/icon-192.png">
+<title>An Idea ☝️💡</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--ink:#262626;--muted:#8E8E8E;--line:#EFEFEF;--soft:#FAFAFA;--bolt:#FF8A3D;--bolt2:#FFE45C;--red:#ED4956}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
+#app{max-width:480px;margin:0 auto;min-height:100vh;padding-top:env(safe-area-inset-top)}
+.top{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:12px 16px 10px}
+.top h1{margin:0;font:600 24px Fraunces,serif;letter-spacing:-.02em;display:flex;align-items:center;gap:6px}
+.top h1 svg{width:22px;height:22px}
+.pill{font:600 12px Inter;padding:6px 10px;border-radius:999px;background:linear-gradient(135deg,var(--bolt2),var(--bolt));color:#3A2000}
+.screen{display:none;padding-bottom:calc(72px + env(safe-area-inset-bottom))}.screen.on{display:block}
+/* stories */
+.stories{display:flex;gap:14px;padding:14px 16px 10px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line)}
+.stories::-webkit-scrollbar{display:none}
+.story{flex:0 0 auto;width:66px;text-align:center;border:0;background:0;padding:0;cursor:pointer;font-family:inherit}
+.story .ring{width:62px;height:62px;border-radius:50%;padding:3px;background:linear-gradient(45deg,#FFE45C,#FF8A3D,#E1306C,#6A2BD9);margin:0 auto}
+.story .ring.seen{background:var(--line)}
+.story .av{width:100%;height:100%;border-radius:50%;background:var(--bg);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:24px}
+.story span{display:block;font-size:11px;margin-top:5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.story.new .av{font-size:26px;color:var(--muted)}
+/* feed post */
+.post{border-bottom:1px solid var(--line);padding-bottom:6px}
+.ph{display:flex;align-items:center;gap:10px;padding:10px 14px}
+.ph .av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#1C1B33,#3A2B6B);display:flex;align-items:center;justify-content:center;font-size:16px}
+.ph b{font-size:14px;font-weight:600}.ph small{display:block;font-size:12px;color:var(--muted)}
+.body{margin:0 14px;aspect-ratio:1/1;border-radius:6px;padding:26px 24px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;color:#fff;cursor:pointer;user-select:none}
+.body h2{font:600 26px/1.2 Fraunces,serif;margin:0 0 14px;letter-spacing:-.01em}
+.body p{font:400 16px/1.5 Inter;margin:0;opacity:.94}
+.body .heart{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transform:scale(.6)}
+.body .heart.pop{animation:pop .7s ease-out}
+@keyframes pop{15%{opacity:1;transform:scale(1.15)}60%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
+.acts{display:flex;align-items:center;gap:16px;padding:10px 14px 4px}
+.acts button{background:0;border:0;padding:0;cursor:pointer;display:flex;color:var(--ink)}
+.acts svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.acts .liked svg{fill:var(--red);stroke:var(--red)}
+.acts .saved svg{fill:var(--ink)}
+.acts .sp{flex:1}
+.cap{padding:0 14px;font-size:14px;line-height:1.45}.cap b{font-weight:600}
+.cap .note{color:var(--ink)}
+.cap .meta{color:var(--muted);font-size:12px;margin-top:6px}
+.loading,.empty{text-align:center;color:var(--muted);padding:56px 24px;font-size:14px;line-height:1.5}
+.empty b{display:block;font:600 22px Fraunces,serif;color:var(--ink);margin-bottom:6px}
+.spin{width:26px;height:26px;border:3px solid var(--line);border-top-color:var(--ink);border-radius:50%;margin:0 auto 14px;animation:s .8s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+.more{display:block;margin:16px auto 24px;font:600 14px Inter;padding:12px 20px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+/* search */
+.sbox{padding:12px 16px;position:sticky;top:0;background:#fff;z-index:4}
+.sbox input{width:100%;font:16px Inter;padding:12px 14px;border:0;border-radius:12px;background:var(--line);color:var(--ink);outline:0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:4px 16px 20px}
+.tile{aspect-ratio:1;border-radius:12px;border:0;padding:16px;display:flex;align-items:flex-end;font:600 16px/1.2 Fraunces,serif;color:#fff;text-align:left;cursor:pointer;letter-spacing:-.01em}
+/* stash & profile */
+.h2{font:600 22px Fraunces,serif;margin:18px 16px 4px}.sub{font-size:13px;color:var(--muted);margin:0 16px 12px}
+.item{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);align-items:flex-start}
+.item .sw{width:56px;height:56px;border-radius:8px;flex:0 0 auto}
+.item h3{margin:0 0 3px;font:600 15px/1.3 Fraunces,serif}.item p{margin:0;font-size:13px;line-height:1.45;color:#444}
+.item small{display:block;color:var(--muted);font-size:11px;margin-top:6px}
+.item button{background:0;border:0;color:var(--muted);font:12px Inter;cursor:pointer;padding:4px 0}
+.prof{text-align:center;padding:28px 16px 8px}
+.prof .big{width:86px;height:86px;border-radius:50%;margin:0 auto 12px;background:linear-gradient(135deg,#1C1B33,#3A2B6B);display:flex;align-items:center;justify-content:center;font-size:40px}
+.stats{display:flex;justify-content:center;gap:28px;margin-top:14px}
+.stats div{text-align:center}.stats b{display:block;font:600 22px Fraunces,serif}.stats span{font-size:12px;color:var(--muted)}
+.goal{margin:22px 16px 0;padding:14px;border:1px solid var(--line);border-radius:12px;font-size:13px}
+.bar{height:6px;background:var(--line);border-radius:3px;margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--bolt2),var(--bolt));transition:width .3s}
+.danger{margin:20px 16px;font:500 13px Inter;color:var(--red);background:0;border:0;cursor:pointer}
+/* nav */
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:6px 0 calc(6px + env(safe-area-inset-bottom));z-index:5}
+nav div{max-width:480px;margin:0 auto;display:flex}
+nav button{flex:1;background:0;border:0;padding:8px;cursor:pointer;color:var(--ink);display:flex;justify-content:center}
+nav svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav button.on svg{fill:currentColor}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;padding:10px 16px;border-radius:999px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+.toast.on{opacity:1}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="top"><h1><svg viewBox="0 0 24 24" style="width:26px;height:26px"><rect width="24" height="24" rx="6" fill="#2A2450"/><text x="12" y="16.5" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="10.5" fill="#FFE45C">A.I</text></svg>An Idea</h1><span class="pill" id="streakPill">0 day streak</span></div>
+
+  <section id="home" class="screen on">
+    <div class="stories" id="stories"></div>
+    <div id="feed"></div>
+  </section>
+
+  <section id="search" class="screen">
+    <div class="sbox"><input id="q" placeholder="Search any topic, book, or question" autocomplete="off" enterkeyhint="search"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="stash" class="screen">
+    <div class="h2">Saved</div><div class="sub" id="stashSub"></div><div id="stashList"></div>
+  </section>
+
+  <section id="profile" class="screen">
+    <div class="prof"><div class="big">💡</div><div style="font:600 18px Fraunces,serif">Your ideas</div>
+      <div class="stats"><div><b id="sRead">0</b><span>ideas read</span></div><div><b id="sSaved">0</b><span>saved</span></div><div><b id="sStreak">0</b><span>day streak</span></div></div></div>
+    <div class="goal"><span id="goalTxt"></span><div class="bar"><i id="goalBar"></i></div></div>
+    <button class="danger" id="reset">Clear all data on this device</button>
+  </section>
+
+  <nav><div>
+    <button data-s="home" class="on" aria-label="Home"><svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></button>
+    <button data-s="search" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+    <button data-s="stash" aria-label="Saved"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+    <button data-s="profile" aria-label="Profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button>
+  </div></nav>
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const today=()=>new Date().toISOString().slice(0,10);
+const TOPICS=[
+ ['Habits','🔁','#1C1B33,#3A2B6B'],['Stoicism','🏛️','#0F3D3E,#2B7A78'],['Money','💸','#3B2F00,#8A6D00'],['Focus','🎯','#4A1A2C,#9B2C56'],
+ ['Sleep','🌙','#141E30,#243B55'],['Negotiation','🤝','#2C3E50,#4CA1AF'],['Leadership','🧭','#3E1F47,#7B3F8A'],['Business','🚀','#1F1C2C,#928DAB'],
+ ['Psychology','🧠','#232526,#414345'],['Parenting','🌱','#134E5E,#71B280'],['Fitness','💪','#42275A,#734B6D'],['Writing','✍️','#373B44,#4286F4']
+];
+const GRADS=TOPICS.map(t=>t[2]);
+let state={saved:[],liked:{},seen:{},stats:{day:'',read:0,streak:0,last:''},feed:[],topic:null,busy:false};
+const mem={};
+async function load(k,d){try{const r=await window.storage.get(k);return JSON.parse(r.value)}catch{try{return JSON.parse(localStorage.getItem(k))??d}catch{return mem[k]??d}}}
+async function persist(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch{}try{await window.storage.set(k,JSON.stringify(v))}catch{}}
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1400)}
+
+function show(s){document.querySelectorAll('.screen').forEach(e=>e.classList.toggle('on',e.id===s));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));window.scrollTo(0,0);if(s==='stash')renderStash();if(s==='profile')renderProfile();if(s==='search')setTimeout(()=>$('#q').focus(),50)}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.s));
+
+/* ---------- AI ---------- */
+async function fetchIdeas(topic){
+  let cards;
+  try{const r=await fetch('/api/ideas',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic})});const d=await r.json();if(!r.ok||!d.cards?.length)throw new Error(d.error||'no cards');cards=d.cards}
+  catch(err){
+    // Fallback only works when previewed inside Claude; on Cloudflare the /api route above is the real path.
+    const prompt=`You write idea cards for a micro-learning feed, in your own words. Topic: "${topic}".\nReturn ONLY a JSON array (no markdown) of 5 objects: {"title": punchy 3-8 word headline, "body": 35-60 word explanation of one distinct, non-obvious idea, "note": one-line practical action the reader can take today, "source": the kind of thinking it draws on}. Each idea must be genuinely different. Never reproduce copyrighted text.`;
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1200,messages:[{role:'user',content:prompt}]})});
+    const data=await r.json();const txt=(data.content||[]).map(c=>c.text||'').join('').replace(/```json|```/g,'');
+    cards=JSON.parse(txt.slice(txt.indexOf('['),txt.lastIndexOf(']')+1));
+  }
+  return cards.map((c,i)=>({...c,topic,id:topic+'|'+c.title,grad:GRADS[(hash(topic)+i)%GRADS.length]}));
+}
+const hash=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7);
+
+/* ---------- feed ---------- */
+function renderStories(){
+  $('#stories').innerHTML=`<button class="story new" onclick="show('search')"><div class="ring seen"><div class="av">+</div></div><span>Your topic</span></button>`+
+   TOPICS.map(([n,e])=>`<button class="story" data-t="${n}"><div class="ring ${state.seen[n]?'seen':''}"><div class="av">${e}</div></div><span>${n}</span></button>`).join('');
+  document.querySelectorAll('.story[data-t]').forEach(b=>b.onclick=()=>openTopic(b.dataset.t));
+}
+async function openTopic(t){
+  if(state.busy)return;state.busy=true;state.topic=t;state.seen[t]=1;persist('seen',state.seen);renderStories();show('home');
+  $('#feed').innerHTML=`<div class="loading"><div class="spin"></div>Writing fresh ideas on ${esc(t)}…</div>`;
+  try{state.feed=await fetchIdeas(t);renderFeed()}
+  catch(e){$('#feed').innerHTML=`<div class="empty"><b>Couldn't load ideas</b>Check your connection and try again.<br><br><button class="more" onclick="openTopic(${JSON.stringify(t)})">Retry</button></div>`}
+  state.busy=false;
+}
+function renderFeed(){
+  if(!state.feed.length){$('#feed').innerHTML=`<div class="empty"><b>Your feed is empty</b>Tap a topic above to start reading.</div>`;return}
+  $('#feed').innerHTML=state.feed.map(c=>post(c)).join('')+`<button class="more" id="moreBtn">Load more on ${esc(state.topic)}</button>`;
+  $('#moreBtn').onclick=async()=>{const b=$('#moreBtn');b.textContent='Writing…';b.disabled=true;try{const n=await fetchIdeas(state.topic);state.feed.push(...n);renderFeed();window.scrollBy({top:400,behavior:'smooth'})}catch{b.textContent='Failed, tap to retry';b.disabled=false}};
+  bindPosts();observeReads();
+}
+function post(c){
+  const liked=!!state.liked[c.id],saved=state.saved.some(s=>s.id===c.id);
+  return `<article class="post" data-id="${esc(c.id)}">
+   <div class="ph"><div class="av">💡</div><div><b>${esc(c.topic)}</b><small>${esc(c.source||'')}</small></div></div>
+   <div class="body" style="background:linear-gradient(135deg,${c.grad})"><h2>${esc(c.title)}</h2><p>${esc(c.body)}</p>
+     <div class="heart"><svg width="96" height="96" viewBox="0 0 24 24" fill="#fff"><path d="M12 21s-7-4.6-9.3-9A5.3 5.3 0 0 1 12 6a5.3 5.3 0 0 1 9.3 6c-2.3 4.4-9.3 9-9.3 9z"/></svg></div></div>
+   <div class="acts">
+     <button class="like ${liked?'liked':''}" aria-label="Like"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.3-9A5.3 5.3 0 0 1 12 6a5.3 5.3 0 0 1 9.3 6c-2.3 4.4-9.3 9-9.3 9z"/></svg></button>
+     <button class="share" aria-label="Share"><svg viewBox="0 0 24 24"><path d="M21 3 10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></svg></button>
+     <span class="sp"></span>
+     <button class="save ${saved?'saved':''}" aria-label="Save"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+   </div>
+   <div class="cap"><b>Try this</b> <span class="note">${esc(c.note)}</span><div class="meta">Free open-source model · ${today()}</div></div>
+  </article>`;
+}
+function bindPosts(){
+  document.querySelectorAll('.post').forEach(a=>{
+    const id=a.dataset.id,c=state.feed.find(x=>x.id===id);
+    const like=()=>{state.liked[id]=!state.liked[id];persist('liked',state.liked);a.querySelector('.like').classList.toggle('liked',!!state.liked[id])};
+    a.querySelector('.like').onclick=like;
+    let last=0;a.querySelector('.body').onclick=()=>{const n=Date.now();if(n-last<300){if(!state.liked[id])like();const h=a.querySelector('.heart');h.classList.remove('pop');void h.offsetWidth;h.classList.add('pop')}last=n};
+    a.querySelector('.save').onclick=()=>{toggleSave(c);a.querySelector('.save').classList.toggle('saved',state.saved.some(s=>s.id===id))};
+    a.querySelector('.share').onclick=async()=>{const t=`${c.title}\n\n${c.body}\n\n— via An Idea ☝️💡`;if(navigator.share){try{await navigator.share({title:c.title,text:t})}catch{}}else{await navigator.clipboard?.writeText(t);toast('Copied')}};
+  });
+}
+function toggleSave(c){const i=state.saved.findIndex(s=>s.id===c.id);if(i>-1){state.saved.splice(i,1);toast('Removed')}else{state.saved.unshift({...c,at:today()});toast('Saved')}persist('saved',state.saved)}
+let io;function observeReads(){io?.disconnect();io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!e.target._read){e.target._read=1;bumpRead()}}),{threshold:.6});document.querySelectorAll('.post').forEach(p=>io.observe(p))}
+function bumpRead(){const s=state.stats,t=today();if(s.day!==t){s.day=t;s.read=0}s.read++;if(s.last!==t){const y=new Date(Date.now()-864e5).toISOString().slice(0,10);s.streak=s.last===y?s.streak+1:1;s.last=t}persist('stats',s);renderProfile()}
+
+/* ---------- search ---------- */
+$('#grid').innerHTML=TOPICS.map(([n,e,g])=>`<button class="tile" data-t="${n}" style="background:linear-gradient(135deg,${g})">${e} ${n}</button>`).join('');
+document.querySelectorAll('.tile').forEach(b=>b.onclick=()=>openTopic(b.dataset.t));
+$('#q').onkeydown=e=>{if(e.key==='Enter'&&$('#q').value.trim()){openTopic($('#q').value.trim());$('#q').blur()}};
+
+/* ---------- stash / profile ---------- */
+function renderStash(){
+  $('#stashSub').textContent=state.saved.length?`${state.saved.length} ideas`:'';
+  if(!state.saved.length){$('#stashList').innerHTML=`<div class="empty"><b>Nothing saved yet</b>Tap the bookmark on any idea and it lands here.</div>`;return}
+  $('#stashList').innerHTML=state.saved.map((s,i)=>`<div class="item"><div class="sw" style="background:linear-gradient(135deg,${s.grad})"></div><div style="flex:1"><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p><small>${esc(s.topic)} · ${s.at}</small><button data-i="${i}">Remove</button></div></div>`).join('');
+  $('#stashList').querySelectorAll('button').forEach(b=>b.onclick=()=>{state.saved.splice(+b.dataset.i,1);persist('saved',state.saved);renderStash()});
+}
+function renderProfile(){const s=state.stats;if(s.day!==today())s.read=0;$('#sRead').textContent=s.read;$('#sSaved').textContent=state.saved.length;$('#sStreak').textContent=s.streak;$('#streakPill').textContent=`${s.streak} day streak`;$('#goalTxt').textContent=`Daily goal: ${Math.min(s.read,5)} of 5 ideas read`;$('#goalBar').style.width=Math.min(100,s.read/5*100)+'%'}
+$('#reset').onclick=()=>{if(confirm('Clear saved ideas, likes and streak on this device?')){state.saved=[];state.liked={};state.seen={};state.stats={day:'',read:0,streak:0,last:''};['saved','liked','seen','stats'].forEach(k=>persist(k,state[k]));renderStories();renderProfile();toast('Cleared')}};
+
+(async()=>{
+  state.saved=await load('saved',[]);state.liked=await load('liked',{});state.seen=await load('seen',{});state.stats=await load('stats',state.stats);
+  renderStories();renderProfile();renderFeed();
+  if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('/sw.js').catch(()=>{});
+})();
+</script>
+</body>
+</html>
