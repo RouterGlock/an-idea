@@ -22,7 +22,7 @@ Fields per card:
 
 Original wording only. Never quote or reproduce copyrighted text.`;
 
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost({ request, env, waitUntil }) {
   if (!env.AI) return json({ error: 'AI binding missing — check wrangler.toml' }, 500);
   let topic, page;
   try { ({ topic, page } = await request.json()); } catch { return json({ error: 'Bad JSON' }, 400); }
@@ -51,11 +51,11 @@ export async function onRequestPost({ request, env }) {
         if (!cards.length) { lastErr = `unparseable output from ${model}`; continue; }
         const thin = cards.filter(c => words(c.body) < MIN_BODY_WORDS).length;
         if (!best || thin < best.thin) best = { cards, model, thin };
-        if (thin <= 1) return store(cache, cacheKey, json({ cards, model }));
+        if (thin <= 1) return store(cache, cacheKey, json({ cards, model }), waitUntil);
       } catch (e) { lastErr = `${model}: ${e.message}`; }
     }
   }
-  if (best) return store(cache, cacheKey, json({ cards: best.cards, model: best.model, note: 'some cards shorter than target' }));
+  if (best) return store(cache, cacheKey, json({ cards: best.cards, model: best.model, note: 'some cards shorter than target' }), waitUntil);
   return json({ error: lastErr }, 502);
 }
 
@@ -83,9 +83,11 @@ function extract(out) {
       source: String(c.source || '').trim(),
     }));
 }
-function store(cache, key, res) {
+function store(cache, key, res, waitUntil) {
   const c = new Response(res.body, res); c.headers.set('cache-control', 's-maxage=43200');
-  cache.put(key, c.clone()).catch(() => {});
+  const put = cache.put(key, c.clone()).catch(() => {});
+  // Keep the isolate alive until the write lands, else the runtime drops it.
+  if (typeof waitUntil === 'function') waitUntil(put);
   return c;
 }
 const words = s => String(s || '').trim().split(/\s+/).filter(Boolean).length;
