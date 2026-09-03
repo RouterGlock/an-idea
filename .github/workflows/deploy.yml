@@ -1,0 +1,29 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy public/ + functions/ to Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # Account ID is not secret (it appears in every dashboard URL); inlined
+          # to keep setup to a single secret. Move to a secret if you prefer.
+          accountId: 793db094bf66a7202f4cd53f1e58772a
+          wranglerVersion: "4.128.0"
+          command: pages deploy public --project-name=an-idea --branch=main

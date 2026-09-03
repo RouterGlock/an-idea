@@ -13,6 +13,19 @@ The script logs you into Cloudflare, creates the `an-idea` Pages project, deploy
 
 Then on your iPhone: open the `*.pages.dev` URL in Safari → Share → **Add to Home Screen**. It installs with the An Idea icon and runs full-screen.
 
+## Auto-deploy on push
+
+`.github/workflows/deploy.yml` redeploys on every push to `main` (and on manual
+"Run workflow"). It needs one repo secret — a Cloudflare API token with the
+**Account · Cloudflare Pages · Edit** permission:
+
+```bash
+gh secret set CLOUDFLARE_API_TOKEN --repo RouterGlock/an-idea
+```
+
+The account ID is inlined in the workflow (it is not secret). After this, deploy
+with `git push` rather than `./deploy.sh` to avoid mixed deployment sources.
+
 ## Local dev
 
 ```bash
