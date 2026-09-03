@@ -25,5 +25,4 @@ jobs:
           # Account ID is not secret (it appears in every dashboard URL); inlined
           # to keep setup to a single secret. Move to a secret if you prefer.
           accountId: 793db094bf66a7202f4cd53f1e58772a
-          wranglerVersion: "4.128.0"
           command: pages deploy public --project-name=an-idea --branch=main
