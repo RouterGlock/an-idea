@@ -27,20 +27,20 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-appl
 .stories{display:flex;gap:14px;padding:14px 16px 10px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line)}
 .stories::-webkit-scrollbar{display:none}
 .story{flex:0 0 auto;width:66px;text-align:center;border:0;background:0;padding:0;cursor:pointer;font-family:inherit}
-.story .ring{width:62px;height:62px;border-radius:50%;padding:3px;background:linear-gradient(45deg,#FFE45C,#FF8A3D,#E1306C,#6A2BD9);margin:0 auto}
+.story .ring{width:62px;height:62px;border-radius:50%;padding:2.5px;background:linear-gradient(135deg,var(--bolt2),var(--bolt));margin:0 auto}
 .story .ring.seen{background:var(--line)}
-.story .av{width:100%;height:100%;border-radius:50%;background:var(--bg);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:24px}
+.story .av{width:100%;height:100%;border-radius:50%;background:var(--soft);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;color:var(--ink)}.story .av svg{width:24px;height:24px}
 .story span{display:block;font-size:11px;margin-top:5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.story.new .av{font-size:26px;color:var(--muted)}
+.story.new .av{color:var(--muted)}
 /* feed post */
 .post{border-bottom:1px solid var(--line);padding-bottom:6px}
 .ph{display:flex;align-items:center;gap:10px;padding:10px 14px}
-.ph .av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#1C1B33,#3A2B6B);display:flex;align-items:center;justify-content:center;font-size:16px}
+.ph .av{width:32px;height:32px;border-radius:50%;overflow:hidden;display:flex}.ph .av svg{width:100%;height:100%}
 .ph b{font-size:14px;font-weight:600}.ph small{display:block;font-size:12px;color:var(--muted)}
 .body{margin:0 14px;aspect-ratio:1/1;border-radius:6px;padding:26px 24px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;color:#fff;cursor:pointer;user-select:none}
-.body h2{font:600 30px/1.15 Fraunces,serif;margin:0 0 16px;letter-spacing:-.015em}
-.body p{font:500 17px/1.45 Inter;margin:0;opacity:.94}
-.body .src{position:absolute;left:24px;top:22px;font:600 11px Inter;letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+.body h2{font:600 30px/1.15 Fraunces,serif;margin:0 0 16px;letter-spacing:-.015em;color:#FFF6C4}
+.body p{font:500 17px/1.45 Inter;margin:0;color:#FFC63D}
+.body .src{position:absolute;left:24px;top:22px;font:600 11px Inter;letter-spacing:.08em;text-transform:uppercase;color:#FFF6C4;opacity:.55}
 .cap .txt{color:var(--capink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .cap.open .txt{display:block}
 .cap .mo{color:var(--muted);background:0;border:0;padding:0;font:14px Inter;cursor:pointer}
@@ -72,7 +72,7 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-appl
 .sbox{padding:12px 16px;position:sticky;top:0;background:var(--bg);z-index:4}
 .sbox input{width:100%;font:16px Inter;padding:12px 14px;border:0;border-radius:12px;background:var(--line);color:var(--ink);outline:0}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:4px 16px 20px}
-.tile{aspect-ratio:1;border-radius:12px;border:0;padding:16px;display:flex;align-items:flex-end;font:600 16px/1.2 Fraunces,serif;color:#fff;text-align:left;cursor:pointer;letter-spacing:-.01em}
+.tile{aspect-ratio:1;border-radius:12px;border:0;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;font:600 17px/1.2 Fraunces,serif;color:#FFF6C4;text-align:left;cursor:pointer;letter-spacing:-.01em}.tile .ti{width:26px;height:26px;color:var(--bolt2)}
 /* stash & profile */
 .h2{font:600 22px Fraunces,serif;margin:18px 16px 4px}.sub{font-size:13px;color:var(--muted);margin:0 16px 12px}
 .item{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);align-items:flex-start}
@@ -81,7 +81,7 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-appl
 .item small{display:block;color:var(--muted);font-size:11px;margin-top:6px}
 .item button{background:0;border:0;color:var(--muted);font:12px Inter;cursor:pointer;padding:4px 0}
 .prof{text-align:center;padding:28px 16px 8px}
-.prof .big{width:86px;height:86px;border-radius:50%;margin:0 auto 12px;background:linear-gradient(135deg,#1C1B33,#3A2B6B);display:flex;align-items:center;justify-content:center;font-size:40px}
+.prof .big{width:86px;height:86px;border-radius:50%;margin:0 auto 12px;overflow:hidden;display:flex}.prof .big svg{width:100%;height:100%}
 .stats{display:flex;justify-content:center;gap:28px;margin-top:14px}
 .stats div{text-align:center}.stats b{display:block;font:600 22px Fraunces,serif}.stats span{font-size:12px;color:var(--muted)}
 .goal{margin:22px 16px 0;padding:14px;border:1px solid var(--line);border-radius:12px;font-size:13px}
@@ -100,7 +100,7 @@ nav button.on svg{fill:currentColor}
 </head>
 <body>
 <div id="app">
-  <div class="top"><h1><svg viewBox="0 0 24 24" style="width:26px;height:26px"><rect width="24" height="24" rx="6" fill="#2A2450"/><text x="12" y="16.5" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="10.5" fill="#FFE45C">A.I</text></svg>An Idea</h1><span class="pill" id="streakPill">0 day streak</span></div>
+  <div class="top"><h1><span id="hdrMark" style="width:26px;height:26px;display:inline-flex"></span>An Idea</h1><span class="pill" id="streakPill">0 day streak</span></div>
 
   <section id="home" class="screen on">
     <div class="stories" id="stories"></div>
@@ -117,7 +117,7 @@ nav button.on svg{fill:currentColor}
   </section>
 
   <section id="profile" class="screen">
-    <div class="prof"><div class="big">💡</div><div style="font:600 18px Fraunces,serif">Your ideas</div>
+    <div class="prof"><div class="big" id="bigMark"></div><div style="font:600 18px Fraunces,serif">Your ideas</div>
       <div class="stats"><div><b id="sRead">0</b><span>ideas read</span></div><div><b id="sSaved">0</b><span>saved</span></div><div><b id="sStreak">0</b><span>day streak</span></div></div></div>
     <div class="goal"><span id="goalTxt"></span><div class="bar"><i id="goalBar"></i></div></div>
     <button class="danger" id="reset">Clear all data on this device</button>
@@ -135,12 +135,31 @@ nav button.on svg{fill:currentColor}
 <script>
 const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 const today=()=>new Date().toISOString().slice(0,10);
+const I={
+ repeat:'<path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>',
+ pillar:'<path d="M3 21h18M5 21V9M19 21V9M9 21V9M15 21V9M3 9h18M12 3 3 9M12 3l9 6"/>',
+ coins:'<circle cx="8" cy="8" r="6"/><path d="M18.1 9.9A6 6 0 1 1 9.9 18.1"/><path d="M7 6h2M7 10h2"/>',
+ target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+ moon:'<path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/>',
+ scale:'<path d="M12 3v18M5 21h14M3 9l4-6 4 6M3 9a4 4 0 0 0 8 0M13 9l4-6 4 6M13 9a4 4 0 0 0 8 0"/>',
+ compass:'<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+ briefcase:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 12h18"/>',
+ brain:'<path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 1 5 3 3 0 0 0 5 2V4z"/><path d="M15 4a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-1 5 3 3 0 0 1-5 2V4z"/><path d="M12 4v15"/>',
+ sprout:'<path d="M12 22V10"/><path d="M12 14c0-4 3-7 8-7-1 5-4 7-8 7z"/><path d="M12 10C12 6 9 4 5 4c1 4 3 6 7 6z"/>',
+ dumbbell:'<path d="M6 8v8M18 8v8M3 10v4M21 10v4M6 12h12"/>',
+ pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+ bolt:'<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+ search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>'
+};
+const ico=(k,cls='')=>`<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${I[k]}</svg>`;
+const MARK='<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#262626"/><text x="11.6" y="16.4" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="10.5" fill="#FFC63D">A</text><circle cx="15.2" cy="15.3" r="1.1" fill="#FFF2A8"/><text x="18.6" y="16.4" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="10.5" fill="#FFC63D">I</text></svg>';
 const TOPICS=[
- ['Habits','🔁','#1C1B33,#3A2B6B'],['Stoicism','🏛️','#0F3D3E,#2B7A78'],['Money','💸','#3B2F00,#8A6D00'],['Focus','🎯','#4A1A2C,#9B2C56'],
- ['Sleep','🌙','#141E30,#243B55'],['Negotiation','🤝','#2C3E50,#4CA1AF'],['Leadership','🧭','#3E1F47,#7B3F8A'],['Business','🚀','#1F1C2C,#928DAB'],
- ['Psychology','🧠','#232526,#414345'],['Parenting','🌱','#134E5E,#71B280'],['Fitness','💪','#42275A,#734B6D'],['Writing','✍️','#373B44,#4286F4']
+ ['Habits','repeat'],['Stoicism','pillar'],['Money','coins'],['Focus','target'],['Sleep','moon'],['Negotiation','scale'],
+ ['Leadership','compass'],['Business','briefcase'],['Psychology','brain'],['Parenting','sprout'],['Fitness','dumbbell'],['Writing','pen']
 ];
-const GRADS=TOPICS.map(t=>t[2]);
+// one family of charcoal tones so every tile reads as the same brand
+const GRADS=['#1F1F1F,#3A3A3A','#232323,#3E3B36','#202225,#363B45','#26221F,#3F3730','#1E2124,#33393E','#242424,#3C3C3C'];
 let state={saved:[],liked:{},seen:{},stats:{day:'',read:0,streak:0,last:''},feed:[],topic:null,busy:false};
 const mem={};
 async function load(k,d){try{const r=await window.storage.get(k);return JSON.parse(r.value)}catch{try{return JSON.parse(localStorage.getItem(k))??d}catch{return mem[k]??d}}}
@@ -153,7 +172,7 @@ document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.
 /* ---------- AI ---------- */
 async function fetchIdeas(topic){
   let cards;
-  try{const r=await fetch('/api/ideas',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic})});const d=await r.json();if(!r.ok||!d.cards?.length)throw new Error(d.error||'no cards');cards=d.cards}
+  try{const r=await fetch('/api/ideas',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic,page:state.page||1})});const d=await r.json();if(!r.ok||!d.cards?.length)throw new Error(d.error||'no cards');cards=d.cards}
   catch(err){
     // Fallback only works when previewed inside Claude; on Cloudflare the /api route above is the real path.
     const prompt=`You write idea cards for a micro-learning feed, in your own words. Topic: "${topic}".\nReturn ONLY a JSON array (no markdown) of 5 objects: {"title": punchy 3-8 word headline, "body": 35-60 word explanation of one distinct, non-obvious idea, "note": one-line practical action the reader can take today, "source": the kind of thinking it draws on}. Each idea must be genuinely different. Never reproduce copyrighted text.`;
@@ -167,12 +186,12 @@ const hash=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7);
 
 /* ---------- feed ---------- */
 function renderStories(){
-  $('#stories').innerHTML=`<button class="story new" onclick="show('search')"><div class="ring seen"><div class="av">+</div></div><span>Your topic</span></button>`+
-   TOPICS.map(([n,e])=>`<button class="story" data-t="${n}"><div class="ring ${state.seen[n]?'seen':''}"><div class="av">${e}</div></div><span>${n}</span></button>`).join('');
+  $('#stories').innerHTML=`<button class="story new" onclick="show('search')"><div class="ring seen"><div class="av">${ico('plus')}</div></div><span>Your topic</span></button>`+
+   TOPICS.map(([n,k])=>`<button class="story" data-t="${n}"><div class="ring ${state.seen[n]?'seen':''}"><div class="av">${ico(k)}</div></div><span>${n}</span></button>`).join('');
   document.querySelectorAll('.story[data-t]').forEach(b=>b.onclick=()=>openTopic(b.dataset.t));
 }
 async function openTopic(t){
-  if(state.busy)return;state.busy=true;state.topic=t;state.seen[t]=1;persist('seen',state.seen);renderStories();show('home');
+  if(state.busy)return;state.busy=true;state.topic=t;state.page=1;state.seen[t]=1;persist('seen',state.seen);renderStories();show('home');
   $('#feed').innerHTML=SKEL+SKEL;
   try{state.feed=await fetchIdeas(t);renderFeed()}
   catch(e){$('#feed').innerHTML=`<div class="empty"><b>Couldn't load ideas</b>Check your connection and try again.<br><br><button class="more" onclick="openTopic(${JSON.stringify(t)})">Retry</button></div>`}
@@ -182,13 +201,13 @@ function renderFeed(){
   if(!state.feed.length){$('#feed').innerHTML=`<div class="empty"><b>Your feed is empty</b>Tap a topic above to start reading.</div>`;return}
   // (feed is auto-filled on first launch, see boot)
   $('#feed').innerHTML=state.feed.map(c=>post(c)).join('')+`<button class="more" id="moreBtn">Load more on ${esc(state.topic)}</button>`;
-  $('#moreBtn').onclick=async()=>{const b=$('#moreBtn');b.textContent='Writing more…';b.disabled=true;try{const n=await fetchIdeas(state.topic);state.feed.push(...n);renderFeed();window.scrollBy({top:400,behavior:'smooth'})}catch{b.textContent='Failed, tap to retry';b.disabled=false}};
+  $('#moreBtn').onclick=async()=>{const b=$('#moreBtn');b.textContent='Writing more…';b.disabled=true;try{state.page=(state.page||1)+1;const n=await fetchIdeas(state.topic);state.feed.push(...n);renderFeed();window.scrollBy({top:400,behavior:'smooth'})}catch{b.textContent='Failed, tap to retry';b.disabled=false}};
   bindPosts();observeReads();
 }
 function post(c){
   const liked=!!state.liked[c.id],saved=state.saved.some(s=>s.id===c.id);
   return `<article class="post" data-id="${esc(c.id)}">
-   <div class="ph"><div class="av">💡</div><div><b>${esc(c.topic)}</b><small>${esc(c.source||'')}</small></div></div>
+   <div class="ph"><div class="av">${MARK}</div><div><b>${esc(c.topic)}</b><small>${esc(c.source||'')}</small></div></div>
    <div class="body" style="background:linear-gradient(135deg,${c.grad})"><span class="src">An Idea</span><h2>${esc(c.title)}</h2><p>${esc(c.hook||'')}</p>
      <div class="heart"><svg width="96" height="96" viewBox="0 0 24 24" fill="#fff"><path d="M12 21s-7-4.6-9.3-9A5.3 5.3 0 0 1 12 6a5.3 5.3 0 0 1 9.3 6c-2.3 4.4-9.3 9-9.3 9z"/></svg></div></div>
    <div class="acts">
@@ -210,7 +229,7 @@ function bindPosts(){
     let last=0;a.querySelector('.body').onclick=()=>{const n=Date.now();if(n-last<300){if(!state.liked[id])like();const h=a.querySelector('.heart');h.classList.remove('pop');void h.offsetWidth;h.classList.add('pop')}last=n};
     a.querySelector('.save').onclick=()=>{toggleSave(c);a.querySelector('.save').classList.toggle('saved',state.saved.some(s=>s.id===id))};
     a.querySelector('.mo').onclick=()=>a.querySelector('.cap').classList.add('open');
-    a.querySelector('.share').onclick=async()=>{const t=`${c.title}\n${c.hook||''}\n\n${c.body}\n\nTry this: ${c.note}\n\n— An Idea ☝️💡 an-idea.pages.dev`;if(navigator.share){try{await navigator.share({title:c.title,text:t})}catch{}}else{await navigator.clipboard?.writeText(t);toast('Copied')}};
+    a.querySelector('.share').onclick=async()=>{const t=`${c.title}\n${c.hook||''}\n\n${c.body}\n\nTry this: ${c.note}\n\n— An Idea · an-idea.pages.dev`;if(navigator.share){try{await navigator.share({title:c.title,text:t})}catch{}}else{await navigator.clipboard?.writeText(t);toast('Copied')}};
   });
 }
 function toggleSave(c){const i=state.saved.findIndex(s=>s.id===c.id);if(i>-1){state.saved.splice(i,1);toast('Removed')}else{state.saved.unshift({...c,at:today()});toast('Saved')}persist('saved',state.saved)}
@@ -218,7 +237,7 @@ let io;function observeReads(){io?.disconnect();io=new IntersectionObserver(es=>
 function bumpRead(){const s=state.stats,t=today();if(s.day!==t){s.day=t;s.read=0}s.read++;if(s.last!==t){const y=new Date(Date.now()-864e5).toISOString().slice(0,10);s.streak=s.last===y?s.streak+1:1;s.last=t}persist('stats',s);renderProfile()}
 
 /* ---------- search ---------- */
-$('#grid').innerHTML=TOPICS.map(([n,e,g])=>`<button class="tile" data-t="${n}" style="background:linear-gradient(135deg,${g})">${e} ${n}</button>`).join('');
+$('#grid').innerHTML=TOPICS.map(([n,k],i)=>`<button class="tile" data-t="${n}" style="background:linear-gradient(135deg,${GRADS[i%GRADS.length]})">${ico(k,'ti')}<span>${n}</span></button>`).join('');
 document.querySelectorAll('.tile').forEach(b=>b.onclick=()=>openTopic(b.dataset.t));
 $('#q').onkeydown=e=>{if(e.key==='Enter'&&$('#q').value.trim()){openTopic($('#q').value.trim());$('#q').blur()}};
 
@@ -234,7 +253,7 @@ $('#reset').onclick=()=>{if(confirm('Clear saved ideas, likes and streak on this
 
 (async()=>{
   state.saved=await load('saved',[]);state.liked=await load('liked',{});state.seen=await load('seen',{});state.stats=await load('stats',state.stats);
-  renderStories();renderProfile();
+  $('#bigMark').innerHTML=MARK;$('#hdrMark').innerHTML=MARK;renderStories();renderProfile();
   if(state.feed.length)renderFeed();else openTopic(TOPICS[(new Date().getDate()+new Date().getMonth())%TOPICS.length][0]);
   if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('/sw.js').catch(()=>{});
 })();
