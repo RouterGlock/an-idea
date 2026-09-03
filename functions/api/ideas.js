@@ -31,8 +31,10 @@ export async function onRequestPost({ request, env }) {
   if (!topic) return json({ error: 'topic required' }, 400);
 
   // Edge cache: same topic+page served instantly for 12h without spending AI neurons.
+  // The key host must be a domain served by this account or cache.put() is a silent
+  // no-op, so build it from the real request origin.
   const cache = caches.default;
-  const cacheKey = new Request('https://an-idea.cache/' + encodeURIComponent(topic.toLowerCase()) + '/' + page);
+  const cacheKey = new Request(new URL('/api/ideas/_cache/' + encodeURIComponent(topic.toLowerCase()) + '/' + page, request.url).toString());
   const hit = await cache.match(cacheKey);
   if (hit) { const h = new Response(hit.body, hit); h.headers.set('x-cache', 'hit'); return h; }
 
